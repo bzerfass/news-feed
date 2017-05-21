@@ -3,7 +3,28 @@
   "version": "0.5.0",
   "description": "News feed parser for RSS, Atom, and JSON feeds",
   "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js --exec babel-node",
+    "build": "babel src --out-file index.js",
+    "lint": "./node_modules/.bin/eslint ./src"
+  },
   "repository": "git@github.com:bzerfass/news-feed.git",
   "author": "bzerfass <bzerfass@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.81.0",
+    "xml2js": "^0.4.17"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-preset-env": "^1.5.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-react": "^7.0.1",
+    "nodemon": "^1.11.0"
+  }
 }
