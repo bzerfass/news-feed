@@ -31,7 +31,7 @@ export const ITEM = {
     content: null,
     author: {
         url: null,
-        name: null
+        name: null,
     },
     categories: [],
     image: null,
