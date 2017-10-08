@@ -1,1 +1,3 @@
-export { default as newsfeed } from './newsfeed';
+import NewsFeed from './newsfeed';
+
+export default NewsFeed;

@@ -1,6 +1,10 @@
-/src
+src
 .babelrc
 .editorconfig
 .eslintignore
+.npmignore
 .gitignore
 .travis.yml
+.eslintrc
+rollup.config.js
+yarn.lock

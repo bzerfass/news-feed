@@ -36,7 +36,10 @@ export default class NewsFeed {
                             cb({ error: er });
                         }
 
-                        cb(result.rss ? parseXML(result.rss) : parseATOM(result.feed));
+                        cb(result.rss
+                            ? parseXML(result.rss, this.type)
+                            : parseATOM(result.feed, this.type),
+                        );
                     });
                     break;
                 }
