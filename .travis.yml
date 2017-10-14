@@ -5,11 +5,11 @@ cache: yarn
 before_script:
 - yarn lint
 - yarn build
-deploy:
-  provider: npm
-  email: bzerfass@gmail.com
-  api_key:
-    secure: Ba+rObKj3sxsFvoL5+bnBsU1mPClxd/RCuGUQXV6H4RP6M0M/AXAkKW8SCSlV7KEshBt8MgUtL4Q33B7Ia6jZMtvDD2BTl2ABMbM4SaVtlPoNT3EJcCTKoyVvfU9FjGF+Nj60mc286cgkv5Ms/nDikQYnc8hwXQQ7lzt9YG5K4oM/0DhHJDN1cnTEkHhwXoUH1UWwPxw9CpraHWzBLZx6FkodUmN5v7sFfzEb4ui8t201N7+x2VenJrli0ogec2h3wvm1mxHSWXeJZrzOoITq0VB4nuB8/y8tGaRrDYj1qxh+Hzxfalj/1PZ7ElTRaXjD8b0qBoLN/+LwNkmqaL4jhCI9RKHnv3Y73X9Ljndgsl7RSPhm0eyYh9IYTfDgmEShmhIEcfnXdN5w6sZ7vzXOdfV5f90rJEvK2PkwH75OrsfF09z00g88WDNyN4fvjd8pVghPt3fV9R6jbZOOEvcIPUjbPP4iX2FGzjWjxPyZfGo2wDwkbz70z9l5O0rE00cY267fPoiGwMF7BzLSmcZXrVhcpIbsWbvShk6IZlDKh5Rjj6wXw6DjoZn/ADuvEhQeBTp0EibBSWkrBa0jiqv2tFpnf5Na4OToXhWhbYWFSqG6t151we+JHgDCWB35O9ybbnSE5uCePT8oZFjuglm9zPr+cMfRDWGQ4zrRHnATns=
-  on:
-    branch: master
-    repo: bzerfass/news-feed
+# deploy:
+#   provider: npm
+#   email: bzerfass@gmail.com
+#   api_key:
+#     secure: Ba+rObKj3sxsFvoL5+bnBsU1mPClxd/RCuGUQXV6H4RP6M0M/AXAkKW8SCSlV7KEshBt8MgUtL4Q33B7Ia6jZMtvDD2BTl2ABMbM4SaVtlPoNT3EJcCTKoyVvfU9FjGF+Nj60mc286cgkv5Ms/nDikQYnc8hwXQQ7lzt9YG5K4oM/0DhHJDN1cnTEkHhwXoUH1UWwPxw9CpraHWzBLZx6FkodUmN5v7sFfzEb4ui8t201N7+x2VenJrli0ogec2h3wvm1mxHSWXeJZrzOoITq0VB4nuB8/y8tGaRrDYj1qxh+Hzxfalj/1PZ7ElTRaXjD8b0qBoLN/+LwNkmqaL4jhCI9RKHnv3Y73X9Ljndgsl7RSPhm0eyYh9IYTfDgmEShmhIEcfnXdN5w6sZ7vzXOdfV5f90rJEvK2PkwH75OrsfF09z00g88WDNyN4fvjd8pVghPt3fV9R6jbZOOEvcIPUjbPP4iX2FGzjWjxPyZfGo2wDwkbz70z9l5O0rE00cY267fPoiGwMF7BzLSmcZXrVhcpIbsWbvShk6IZlDKh5Rjj6wXw6DjoZn/ADuvEhQeBTp0EibBSWkrBa0jiqv2tFpnf5Na4OToXhWhbYWFSqG6t151we+JHgDCWB35O9ybbnSE5uCePT8oZFjuglm9zPr+cMfRDWGQ4zrRHnATns=
+#   on:
+#     branch: master
+#     repo: bzerfass/news-feed

@@ -11,9 +11,9 @@ yarn add news-feed
 import newsFeed from 'news-feed';
 
 
-const feed = newsFeed('http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml');
+const feed =  new newsFeed('http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml');
 
-feed.load((result) => {
+feed.load().then((result) => {
     if (!result.error) {
         console.log(result);
     }

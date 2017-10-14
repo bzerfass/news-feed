@@ -7,45 +7,44 @@ export default class NewsFeed {
         this.url = url;
         this.type = null;
     }
-    load(cb) {
-        request({
-            url: this.url,
-        }, (error, response, body) => {
-            if (error || response.statusCode !== 200) {
-                cb({ error: `Bad status code: ${response.statusCode}` });
-            }
-
-            this.type = response.headers['content-type'].split(';')[0].trim();
-
-            switch (this.type) {
-                case 'application/json':
-                    cb(parseJSON(JSON.parse(body), this.type));
-                    break;
-                case 'application/xml':
-                case 'application/rss+xml':
-                case 'application/atom+xml':
-                case 'text/xml': {
-                    const parse = new xml2js.Parser({
-                        trim: false,
-                        normalize: true,
-                        mergeAttrs: true,
-                    });
-                    parse.addListener('error', (err) => cb({ erro: err }));
-                    parse.parseString(body, (er, result) => {
-                        if (er) {
-                            cb({ error: er });
-                        }
-
-                        cb(result.rss
-                            ? parseXML(result.rss, this.type)
-                            : parseATOM(result.feed, this.type),
-                        );
-                    });
-                    break;
+    load() {
+        return new Promise((resolve, reject) => {
+            // eslint-disable-next-line consistent-return
+            request({ url: this.url }, (error, response, body) => {
+                if (error || response.statusCode !== 200) {
+                    return reject({ error: `Bad status code: ${response.statusCode}` });
                 }
-                default:
-                    cb({ error: `${this.type}, not a valid feed type` });
-            }
+                this.type = response.headers['content-type'].split(';')[0].trim();
+
+                switch (this.type) {
+                    case 'application/json':
+                        return resolve(parseJSON(JSON.parse(body), this.type));
+                    case 'application/xml':
+                    case 'application/rss+xml':
+                    case 'application/atom+xml':
+                    case 'text/xml': {
+                        const parse = new xml2js.Parser({
+                            trim: false,
+                            normalize: true,
+                            mergeAttrs: true,
+                        });
+                        parse.addListener('error', (err) => reject({ error: err }));
+                        parse.parseString(body, (er, result) => {
+                            if (er) {
+                                reject({ error: er });
+                            }
+
+                            return resolve(result.rss
+                                ? parseXML(result.rss, this.type)
+                                : parseATOM(result.feed, this.type),
+                            );
+                        });
+                        break;
+                    }
+                    default:
+                        return reject({ error: `${this.type}, not a valid feed type` });
+                }
+            });
         });
     }
 }
