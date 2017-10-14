@@ -1,6 +1,6 @@
 {
   "name": "news-feed",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "News feed parser for RSS, Atom, and JSON feeds",
   "main": "dist/index.js",
   "scripts": {
