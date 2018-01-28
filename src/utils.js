@@ -43,11 +43,10 @@ export function parseXML(data, type) {
     FEED.website = channel.link ? channel.link[0] : null;
 
     FEED.url = channel['atom:link'] && channel['atom:link'][0] ? channel['atom:link'][0].href[0] :
-        channel['atom10:link'] && channel['atom10:link'][0] ? channel['atom10:link'][0].href[0] : this.url;
+        channel['atom10:link'] && channel['atom10:link'][0] ? channel['atom10:link'][0].href[0] : FEED.website;
 
     FEED.categories = channel.category || null;
 
-    // NEEED TO FFIGURE OUT AUTHOR
     FEED.icon = channel.image && channel.image[0] ? channel.image[0].url : null;
     FEED.favicon = channel.favicon ? channel.favicon[0] : `https://www.google.com/s2/favicons?domain_url=${FEED.url}`;
 
@@ -61,7 +60,7 @@ export function parseXML(data, type) {
             author: Object.assign(ITEM.author, {
                 name: item['dc:creator'] ? item['dc:creator'][0] : null,
             }),
-            image: item['media:thumbnail'] && item['media:thumbnail'][0] ? item['media:thumbnail'][0].url : (item['media:content'] && item['media:content'][0] ? item['media:content'][0].url : null),
+            image: parseXMLImage(item['media:thumbnail'], item['media:content'], item['media:group'], item.description),
             categories: item.category || null,
         });
     });
@@ -70,13 +69,26 @@ export function parseXML(data, type) {
     return FEED;
 }
 
+function parseXMLImage(thumbnail, content, group, html) {
+    if (thumbnail && thumbnail[0] && thumbnail[0].url && thumbnail[0].url.length > 0) {
+        return thumbnail[0].url[0];
+    } else if (content && content[0] && content[0].url && content[0].url.length > 0) {
+        return content[0].url[0];
+    } else if (group && group[0]) {
+        return parseXMLImage(group[0]['media:thumbnail'], group[0]['media:content'], null, html);
+    } else if (html && html[0]) {
+        return parseImage(html[0]);
+    }
+    return null;
+}
+
 export function parseATOM(data, type) {
     FEED.type = type;
     FEED.title = data.title ? data.title[0] : null;
     FEED.description = data.subtitle ? data.subtitle[0] : null;
     FEED.website = data.link ? data.link[0].href : null;
     FEED.url = data['atom:link'] && data['atom:link'][0] ? data['atom:link'][0].href[0] :
-        data['atom10:link'] && data['atom10:link'][0] ? data['atom10:link'][0].href[0] : this.url;
+        data['atom10:link'] && data['atom10:link'][0] ? data['atom10:link'][0].href[0] : FEED.website;
 
     FEED.icon = data.logo ? data.logo : null;
     FEED.categories = data.category ? data.category.map((item) => item.term) : null;
@@ -93,7 +105,10 @@ export function parseATOM(data, type) {
             categories: item.category ? item.category.map((cat) => cat.term) : null,
             text: item.content ? (item.content[0] && item.content[0]._ ?
                 parseHTML(item.content[0]._) : null) : null,
-            content: item.content ? item.content[0] : null,
+            content: item.content ? (item.content[0] && item.content[0]._ ?
+                item.content[0]._ : null) : null,
+            image: item.content ? (item.content[0] && item.content[0]._ ?
+                parseImage(item.content[0]._) : null) : null,
         });
     });
 
@@ -103,4 +118,11 @@ export function parseATOM(data, type) {
 
 export function parseHTML(html) {
     return html ? html.replace(/<\/?[^>]+(>|$)/g, '').replace(/\r?\n|\r/g, '').trim() : null;
+}
+
+
+export function parseImage(html) {
+    const regex = /<img[^>]+src="([^">]+)/g;
+    const result = regex.exec(html);
+    return (result && result[1]) ? result[1] : null;
 }
