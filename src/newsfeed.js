@@ -21,6 +21,7 @@ export default class NewsFeed {
                         return resolve(parseJSON(JSON.parse(body), this.type));
                     case 'application/xml':
                     case 'application/rss+xml':
+                    case 'application/x-rss+xml':
                     case 'application/atom+xml':
                     case 'text/xml': {
                         const parse = new xml2js.Parser({
